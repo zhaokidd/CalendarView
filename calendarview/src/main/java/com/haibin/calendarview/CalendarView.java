@@ -940,14 +940,16 @@ public class CalendarView extends FrameLayout {
      * @param otherMonthColor          其它月份字体颜色
      * @param curMonthLunarTextColor   当前月份农历字体颜色
      * @param otherMonthLunarTextColor 其它农历字体颜色
+     * @param pailuanTextColor         排卵日字体颜色
      */
     public void setTextColor(
             int currentDayTextColor,
             int curMonthTextColor,
             int otherMonthColor,
             int curMonthLunarTextColor,
-            int otherMonthLunarTextColor) {
-        mDelegate.setTextColor(currentDayTextColor, curMonthTextColor, otherMonthColor, curMonthLunarTextColor, otherMonthLunarTextColor);
+            int otherMonthLunarTextColor,
+            int pailuanTextColor) {
+        mDelegate.setTextColor(currentDayTextColor, curMonthTextColor, otherMonthColor, curMonthLunarTextColor, otherMonthLunarTextColor, pailuanTextColor);
     }
 
     /**

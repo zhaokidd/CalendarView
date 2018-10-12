@@ -24,6 +24,7 @@ import android.view.View;
  * Created by huanghaibin on 2017/11/15.
  */
 public abstract class MonthView extends BaseMonthView {
+    public boolean isNeedPaintBitmap = false;
 
     public MonthView(Context context) {
         super(context);
@@ -33,7 +34,7 @@ public abstract class MonthView extends BaseMonthView {
     protected void onDraw(Canvas canvas) {
         if (mLineCount == 0)
             return;
-        mItemWidth = (getWidth() - 2 * mDelegate.getCalendarPadding()) / 7;
+//        mItemWidth = (getWidth() - 2 * mDelegate.getCalendarPadding()) / 7;
         onPreviewHook();
         int count = mLineCount * 7;
         int d = 0;
@@ -75,6 +76,10 @@ public abstract class MonthView extends BaseMonthView {
         onLoopStart(x, y);
         boolean isSelected = d == mCurrentItem;
         boolean hasScheme = calendar.hasScheme();
+
+        if (isNeedPaintBitmap) {
+            onDrawBackGroundAndBitmap(canvas, calendar, x, y);
+        }
 
         if (hasScheme) {
             //标记的日子
@@ -259,4 +264,11 @@ public abstract class MonthView extends BaseMonthView {
      * @param isSelected 是否选中
      */
     protected abstract void onDrawText(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme, boolean isSelected);
+
+
+    /**
+     * added by zy
+     * 绘制日历右下角的心形图标
+     */
+    protected abstract void onDrawBackGroundAndBitmap(Canvas canvas, Calendar calendar, int x, int y);
 }

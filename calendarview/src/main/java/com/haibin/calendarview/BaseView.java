@@ -19,6 +19,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -35,6 +36,21 @@ import java.util.List;
 public abstract class BaseView extends View implements View.OnClickListener, View.OnLongClickListener {
 
     CalendarViewDelegate mDelegate;
+
+    /**
+     * 排卵日文字画笔
+     */
+    protected Paint mPaiLuanDateTextPaint = new Paint();
+
+    /**
+     * 背景色画笔
+     */
+    protected Paint mBackGroundPaint = new Paint();
+
+    /**
+     * 右下角图标的画笔
+     */
+    protected Paint mBitmapPaint = new Paint();
 
     /**
      * 当前月份日期的笔
@@ -134,7 +150,12 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
     /**
      * 字体大小
      */
-    static final int TEXT_SIZE = 14;
+    static final int TEXT_SIZE = 18;
+
+    /**
+     * 右下角心形图标大小
+     */
+    protected int mBitmapSize;
 
     /**
      * 当前点击项
@@ -156,17 +177,30 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
      * @param context context
      */
     private void initPaint(Context context) {
+        mBitmapSize = CalendarUtil.dipToPx(context, 13.0f);
+
+        mPaiLuanDateTextPaint.setAntiAlias(true);
+        mPaiLuanDateTextPaint.setTextAlign(Paint.Align.CENTER);
+        mPaiLuanDateTextPaint.setColor(0xFFFFFF);
+        mPaiLuanDateTextPaint.setFakeBoldText(true);
+        mPaiLuanDateTextPaint.setTextSize(CalendarUtil.dipToPx(context, TEXT_SIZE));
+
+        mBackGroundPaint.setAntiAlias(true);
+        mBackGroundPaint.setStyle(Paint.Style.FILL);
+
         mCurMonthTextPaint.setAntiAlias(true);
         mCurMonthTextPaint.setTextAlign(Paint.Align.CENTER);
-        mCurMonthTextPaint.setColor(0xFF111111);
+        mCurMonthTextPaint.setColor(0x010000);
         mCurMonthTextPaint.setFakeBoldText(true);
         mCurMonthTextPaint.setTextSize(CalendarUtil.dipToPx(context, TEXT_SIZE));
 
         mOtherMonthTextPaint.setAntiAlias(true);
         mOtherMonthTextPaint.setTextAlign(Paint.Align.CENTER);
-        mOtherMonthTextPaint.setColor(0xFFe1e1e1);
+        mOtherMonthTextPaint.setColor(0xCDCDCD);
         mOtherMonthTextPaint.setFakeBoldText(true);
         mOtherMonthTextPaint.setTextSize(CalendarUtil.dipToPx(context, TEXT_SIZE));
+//        Typeface font = Typeface.create(Typeface.DEFAULT, Typeface.BOLD);
+//        mOtherMonthTextPaint.setTypeface(font);
 
         mCurMonthLunarTextPaint.setAntiAlias(true);
         mCurMonthLunarTextPaint.setTextAlign(Paint.Align.CENTER);
@@ -222,6 +256,7 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
 
     /**
      * 初始化所有UI配置
+     * 这里才是真正设置色值和字体大小的地方，delegate在这里生效
      *
      * @param delegate delegate
      */
@@ -232,6 +267,7 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
         this.mCurDayLunarTextPaint.setColor(delegate.getCurDayLunarTextColor());
         this.mCurMonthTextPaint.setColor(delegate.getCurrentMonthTextColor());
         this.mOtherMonthTextPaint.setColor(delegate.getOtherMonthTextColor());
+        this.mPaiLuanDateTextPaint.setColor(delegate.getPaiLuanDateTextColor());
         this.mCurMonthLunarTextPaint.setColor(delegate.getCurrentMonthLunarTextColor());
         this.mSelectedLunarTextPaint.setColor(delegate.getSelectedLunarTextColor());
         this.mSelectTextPaint.setColor(delegate.getSelectedTextColor());
@@ -241,7 +277,7 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
         this.mSchemePaint.setColor(delegate.getSchemeThemeColor());
         this.mSchemeTextPaint.setColor(delegate.getSchemeTextColor());
 
-
+        this.mPaiLuanDateTextPaint.setTextSize(delegate.getDayTextSize());
         this.mCurMonthTextPaint.setTextSize(delegate.getDayTextSize());
         this.mOtherMonthTextPaint.setTextSize(delegate.getDayTextSize());
         this.mCurDayTextPaint.setTextSize(delegate.getDayTextSize());
@@ -261,9 +297,10 @@ public abstract class BaseView extends View implements View.OnClickListener, Vie
     }
 
     void updateItemHeight() {
+        this.mItemWidth = mDelegate.getCalendarItemWidth();
         this.mItemHeight = mDelegate.getCalendarItemHeight();
         Paint.FontMetrics metrics = mCurMonthTextPaint.getFontMetrics();
-        mTextBaseLine = mItemHeight / 2 - metrics.descent + (metrics.bottom - metrics.top) / 2;
+        mTextBaseLine = mItemHeight / 2 + (metrics.bottom - metrics.top - metrics.ascent - metrics.descent) / 2;
     }
 
 

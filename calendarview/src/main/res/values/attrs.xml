@@ -14,12 +14,14 @@
         <attr name="week_view" format="string" /> <!--完全自定义周视图-->
         <attr name="year_view" format="string" /> <!--完全自定义年视图-->
         <attr name="week_bar_height" format="dimension" /> <!--星期栏的高度-->
+        <attr name="week_bar_width" format="dimension"/><!--星期栏的宽度-->
         <attr name="week_bar_view" format="string" /> <!--如果需要的话使用自定义星期栏-->
 
         <attr name="scheme_text" format="string" />
         <attr name="day_text_size" format="dimension" />
         <attr name="lunar_text_size" format="dimension" />
         <attr name="calendar_height" format="dimension" />
+        <attr name="calendar_width" format="dimension"/>
         <attr name="scheme_text_color" format="color" />
         <attr name="scheme_month_text_color" format="color" />
         <attr name="scheme_lunar_text_color" format="color" />
@@ -35,6 +37,7 @@
         <attr name="other_month_text_color" format="color" />
         <attr name="current_month_lunar_text_color" format="color" />
         <attr name="other_month_lunar_text_color" format="color" />
+        <attr name="pailuan_date_month_text_color" format="color"/>
 
 
         <!-- 年视图相关 -->

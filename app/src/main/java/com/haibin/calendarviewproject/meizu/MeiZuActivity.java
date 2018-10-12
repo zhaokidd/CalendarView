@@ -38,8 +38,8 @@ public class MeiZuActivity extends BaseActivity implements
 
     RelativeLayout mRelativeTool;
     private int mYear;
-    CalendarLayout mCalendarLayout;
-    GroupRecyclerView mRecyclerView;
+//    CalendarLayout mCalendarLayout;
+//    GroupRecyclerView mRecyclerView;
 
     public static void show(Context context) {
         context.startActivity(new Intent(context, MeiZuActivity.class));
@@ -61,7 +61,7 @@ public class MeiZuActivity extends BaseActivity implements
         mRelativeTool = (RelativeLayout) findViewById(R.id.rl_tool);
         mCalendarView = (CalendarView) findViewById(R.id.calendarView);
         mTextCurrentDay = (TextView) findViewById(R.id.tv_current_day);
-        mTextMonthDay.setOnClickListener(new View.OnClickListener() {
+/*        mTextMonthDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!mCalendarLayout.isExpand()) {
@@ -73,14 +73,14 @@ public class MeiZuActivity extends BaseActivity implements
                 mTextYear.setVisibility(View.GONE);
                 mTextMonthDay.setText(String.valueOf(mYear));
             }
-        });
+        });*/
         findViewById(R.id.fl_current).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCalendarView.scrollToCurrent();
             }
         });
-        mCalendarLayout = (CalendarLayout) findViewById(R.id.calendarLayout);
+//        mCalendarLayout = (CalendarLayout) findViewById(R.id.calendarLayout);
         mCalendarView.setOnCalendarSelectListener(this);
         mCalendarView.setOnYearChangeListener(this);
         mTextYear.setText(String.valueOf(mCalendarView.getCurYear()));
@@ -88,6 +88,7 @@ public class MeiZuActivity extends BaseActivity implements
         mTextMonthDay.setText(mCalendarView.getCurMonth() + "月" + mCalendarView.getCurDay() + "日");
         mTextLunar.setText("今日");
         mTextCurrentDay.setText(String.valueOf(mCalendarView.getCurDay()));
+
     }
 
     @Override
@@ -118,11 +119,11 @@ public class MeiZuActivity extends BaseActivity implements
         mCalendarView.setSchemeDate(map);
 
 
-        mRecyclerView = (GroupRecyclerView) findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new GroupItemDecoration<String, Article>());
-        mRecyclerView.setAdapter(new ArticleAdapter(this));
-        mRecyclerView.notifyDataSetChanged();
+//        mRecyclerView = (GroupRecyclerView) findViewById(R.id.recyclerView);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        mRecyclerView.addItemDecoration(new GroupItemDecoration<String, Article>());
+//        mRecyclerView.setAdapter(new ArticleAdapter(this));
+//        mRecyclerView.notifyDataSetChanged();
     }
 
 

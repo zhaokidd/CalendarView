@@ -1,13 +1,19 @@
 package com.haibin.calendarviewproject.meizu;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.View;
 
 import com.haibin.calendarview.Calendar;
+import com.haibin.calendarview.MensesCalendar;
 import com.haibin.calendarview.MonthView;
+import com.haibin.calendarviewproject.R;
 
 /**
  * 高仿魅族日历布局
@@ -29,8 +35,12 @@ public class MeiZuMonthView extends MonthView {
     private int mPadding;
     private float mSchemeBaseLine;
 
+    private Bitmap mBitmapLoveEmpty;
+    private Bitmap mBitmapLoveFill;
+
     public MeiZuMonthView(Context context) {
         super(context);
+        isNeedPaintBitmap = true;
 
         mTextPaint.setTextSize(dipToPx(context, 8));
         mTextPaint.setColor(0xffffffff);
@@ -42,7 +52,7 @@ public class MeiZuMonthView extends MonthView {
         mSchemeBasicPaint.setTextAlign(Paint.Align.CENTER);
         mSchemeBasicPaint.setFakeBoldText(true);
         mRadio = dipToPx(getContext(), 7);
-        mPadding = dipToPx(getContext(), 4);
+        mPadding = dipToPx(getContext(), 0);
         Paint.FontMetrics metrics = mSchemeBasicPaint.getFontMetrics();
         mSchemeBaseLine = mRadio - metrics.descent + (metrics.bottom - metrics.top) / 2 + dipToPx(getContext(), 1);
 
@@ -50,6 +60,10 @@ public class MeiZuMonthView extends MonthView {
         setLayerType(View.LAYER_TYPE_SOFTWARE, mSchemeBasicPaint);
         //4.0以上硬件加速会导致无效
         mSchemeBasicPaint.setMaskFilter(new BlurMaskFilter(25, BlurMaskFilter.Blur.SOLID));
+
+        //加载图标
+        mBitmapLoveEmpty = BitmapFactory.decodeResource(getResources(), R.drawable.calendar_love_empty);
+        mBitmapLoveFill = BitmapFactory.decodeResource(getResources(), R.drawable.calendar_love_fill);
     }
 
     /**
@@ -79,13 +93,13 @@ public class MeiZuMonthView extends MonthView {
      */
     @Override
     protected void onDrawScheme(Canvas canvas, Calendar calendar, int x, int y) {
-        mSchemeBasicPaint.setColor(calendar.getSchemeColor());
-
-        canvas.drawCircle(x + mItemWidth - mPadding - mRadio / 2, y + mPadding + mRadio, mRadio, mSchemeBasicPaint);
-
-        canvas.drawText(calendar.getScheme(),
-                x + mItemWidth - mPadding - mRadio / 2 - getTextWidth(calendar.getScheme()) / 2,
-                y + mPadding + mSchemeBaseLine, mTextPaint);
+//        mSchemeBasicPaint.setColor(calendar.getSchemeColor());
+//
+//        canvas.drawCircle(x + mItemWidth - mPadding - mRadio / 2, y + mPadding + mRadio, mRadio, mSchemeBasicPaint);
+//
+//        canvas.drawText(calendar.getScheme(),
+//                x + mItemWidth - mPadding - mRadio / 2 - getTextWidth(calendar.getScheme()) / 2,
+//                y + mPadding + mSchemeBaseLine, mTextPaint);
     }
 
     private float getTextWidth(String text) {
@@ -108,8 +122,16 @@ public class MeiZuMonthView extends MonthView {
         int top = y - mItemHeight / 6;
 
         boolean isInRange = isInRange(calendar);
+        Paint paint;
+        if (calendar.getMensesState() == MensesCalendar.STATE_PAILUAN_DATE) {
+            paint = mPaiLuanDateTextPaint;
+        } else {
+            paint = calendar.isCurrentMonth() && isInRange ? mCurMonthTextPaint : mOtherMonthTextPaint;
+        }
 
-        if (isSelected) {
+        canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top, paint);
+
+       /* if (isSelected) {
             canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
                     mSelectTextPaint);
             canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10, mSelectedLunarTextPaint);
@@ -125,7 +147,34 @@ public class MeiZuMonthView extends MonthView {
             canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10,
                     calendar.isCurrentDay() && isInRange ? mCurDayLunarTextPaint :
                             calendar.isCurrentMonth() ? mCurMonthLunarTextPaint : mOtherMonthLunarTextPaint);
+        }*/
+    }
+
+    @Override
+    protected void onDrawBackGroundAndBitmap(Canvas canvas, Calendar calendar, int x, int y) {
+        int left = x + mItemWidth - mBitmapSize;
+        int right = (x + mItemWidth);
+        int top = y + mItemHeight - mBitmapSize;
+        int bottom = y + mItemHeight;
+
+        //根据经期状态选择颜色
+        switch (calendar.getMensesState()) {
+            case MensesCalendar.STATE_JINGQI:
+                mBackGroundPaint.setColor(getResources().getColor(R.color.calendar_jingqi));
+                break;
+            case MensesCalendar.STATE_PAILUAN_DURATION:
+                mBackGroundPaint.setColor(getResources().getColor(R.color.calendar_pailuan_duration));
+                break;
+            case MensesCalendar.STATE_PAILUAN_DATE:
+                mBackGroundPaint.setColor(getResources().getColor(R.color.calendar_pailuan_date));
+                break;
+            case MensesCalendar.STATE_NORMAL:
+                mBackGroundPaint.setColor(getResources().getColor(R.color.calendar_normal));
+                break;
         }
+        canvas.drawRect(x + mPadding, y + mPadding, x + mItemWidth - mPadding, y + mItemHeight - mPadding, mBackGroundPaint);
+        Rect dest = new Rect(left, top, right, bottom);
+        canvas.drawBitmap(mBitmapLoveEmpty, null, dest, mBitmapPaint);
     }
 
     /**

@@ -113,4 +113,9 @@ public final class DefaultMonthView extends MonthView {
                             calendar.isCurrentMonth() ? mCurMonthLunarTextPaint : mOtherMonthLunarTextPaint);
         }
     }
+
+    @Override
+    protected void onDrawBackGroundAndBitmap(Canvas canvas, Calendar calendar, int x, int y) {
+
+    }
 }

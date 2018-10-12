@@ -85,6 +85,11 @@ public class ProgressMonthView extends MonthView {
         }
     }
 
+    @Override
+    protected void onDrawBackGroundAndBitmap(Canvas canvas, Calendar calendar, int x, int y) {
+
+    }
+
     /**
      * 获取角度
      *

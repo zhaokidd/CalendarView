@@ -75,4 +75,9 @@ public class SimpleMonthView extends MonthView {
                             calendar.isCurrentMonth() ? mCurMonthTextPaint : mOtherMonthTextPaint);
         }
     }
+
+    @Override
+    protected void onDrawBackGroundAndBitmap(Canvas canvas, Calendar calendar, int x, int y) {
+
+    }
 }

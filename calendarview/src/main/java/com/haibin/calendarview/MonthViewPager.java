@@ -180,7 +180,7 @@ public final class MonthViewPager extends ViewPager {
      */
     private void updateMonthViewHeight(int year, int month) {
         if (mDelegate.getMonthViewShowMode() == CalendarViewDelegate.MODE_ALL_MONTH) {//非动态高度就不需要了
-            mCurrentViewHeight = 6 * mDelegate.getCalendarItemHeight();
+            mCurrentViewHeight = 5 * mDelegate.getCalendarItemHeight();
             return;
         }
 

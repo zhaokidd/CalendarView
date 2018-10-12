@@ -80,4 +80,9 @@ public class ColorfulMonthView extends MonthView {
             canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10, mCurMonthLunarTextPaint);
         }
     }
+
+    @Override
+    protected void onDrawBackGroundAndBitmap(Canvas canvas, Calendar calendar, int x, int y) {
+
+    }
 }

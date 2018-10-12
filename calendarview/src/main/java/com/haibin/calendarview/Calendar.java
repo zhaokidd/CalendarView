@@ -65,7 +65,7 @@ public final class Calendar implements Serializable {
 
     /**
      * 农历字符串，没有特别大的意义，用来做简单的农历或者节日标记
-     * 建议通过lunarCakendar获取完整的农历日期
+     * 建议通过lunarCalendar获取完整的农历日期
      */
     private String lunar;
 
@@ -120,6 +120,19 @@ public final class Calendar implements Serializable {
      */
     private Calendar lunarCalendar;
 
+    /**
+     * 经期状态：经期，排卵期，排卵日，普通日期
+     */
+    private int mensesState;
+
+
+    public int getMensesState() {
+        return mensesState;
+    }
+
+    public void setMensesState(int mensesState) {
+        this.mensesState = mensesState;
+    }
 
     public int getYear() {
         return year;

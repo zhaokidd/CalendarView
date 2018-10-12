@@ -99,7 +99,7 @@ public abstract class BaseMonthView extends BaseView {
         }
 
         if (mDelegate.getMonthViewShowMode() == CalendarViewDelegate.MODE_ALL_MONTH) {
-            mLineCount = 6;
+            mLineCount = 5;
         } else {
             mLineCount = (preDiff + monthDayCount + mNextDiff) / 7;
         }

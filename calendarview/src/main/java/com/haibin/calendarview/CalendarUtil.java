@@ -536,7 +536,7 @@ final class CalendarUtil {
 
         date.set(year, month - 1, 1);
 
-        int mPreDiff = getMonthViewStartDiff(year, month, weekStar);//获取月视图其实偏移量
+        int mPreDiff = getMonthViewStartDiff(year, month, weekStar);//获取月视图起始偏移量
 
         int monthDayCount = getMonthDaysCount(year, month);//获取月份真实天数
 
@@ -589,6 +589,7 @@ final class CalendarUtil {
                 calendarDate.setCurrentDay(true);
             }
             LunarCalendar.setupLunarCalendar(calendarDate);
+            MensesCalendar.setUpMensesCalendar(calendarDate);
             mItems.add(calendarDate);
         }
         return mItems;

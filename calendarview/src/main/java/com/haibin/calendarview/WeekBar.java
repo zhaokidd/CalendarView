@@ -141,9 +141,14 @@ public class WeekBar extends LinearLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (mDelegate != null) {
             heightMeasureSpec = MeasureSpec.makeMeasureSpec(mDelegate.getWeekBarHeight(), MeasureSpec.EXACTLY);
+            widthMeasureSpec = MeasureSpec.makeMeasureSpec(mDelegate.getWeekBarWidth()
+                    + mDelegate.getCalendarPadding() * 2, MeasureSpec.EXACTLY);
         } else {
             heightMeasureSpec = MeasureSpec.makeMeasureSpec(CalendarUtil.dipToPx(getContext(), 40), MeasureSpec.EXACTLY);
+            widthMeasureSpec = MeasureSpec.makeMeasureSpec(CalendarUtil.dipToPx(getContext(),
+                    315) + mDelegate.getCalendarPadding() * 2, MeasureSpec.EXACTLY);
         }
+
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 

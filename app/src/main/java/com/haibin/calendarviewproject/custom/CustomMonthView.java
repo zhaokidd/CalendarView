@@ -189,6 +189,11 @@ public class CustomMonthView extends MonthView {
         }
     }
 
+    @Override
+    protected void onDrawBackGroundAndBitmap(Canvas canvas, Calendar calendar, int x, int y) {
+
+    }
+
     /**
      * dp转px
      *
