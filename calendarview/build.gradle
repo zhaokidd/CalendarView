@@ -46,4 +46,4 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.3.0'
     testCompile 'junit:junit:4.12'
 }
-apply from: '../script/gradle-jcenter-push.gradle'
+//apply from: '../script/gradle-jcenter-push.gradle'
